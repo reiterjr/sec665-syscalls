@@ -1,9 +1,8 @@
 [book]
 authors = ["Jonathan Reiter"]
-language = "en"
 src = "src"
 title = "syscalls"
-description = "Course workbook and reference for SEC665"
+description = "Extended content for SEC665"
 language = "en"
 text-direction = "ltr"
 
