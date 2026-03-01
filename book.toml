@@ -19,5 +19,4 @@ additional-css = ["./mdbook-admonish.css"]
 
 [output.html.print]
 site-url = "/"
-favicon = "favicon.jpg"
 enable = true
