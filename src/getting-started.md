@@ -1,5 +1,21 @@
 # Getting started with syscalls
 
+```admonish example
+Some example admonishment
+```
+
+```admonish
+Some note admonishment
+```
+
+```admonish warning
+Some warning admonishment: here is a warning
+```
+
+```admonish info
+Some info admonishment
+```
+
 ## What is a system call?
 If you look online for MSDN documentation around the word syscall or system call, you might come up empty handed. You might even hit this [page](https://learn.microsoft.com/en-us/cpp/c-runtime-library/system-calls?view=msvc-170) thinking you found something of interest. Nope. Not even close. Perhaps some of the best, formal documentation is found in the Windows Internals books when describing system service calls, trapping, and overall system service handling. Windows Internals Chapter 8: System mechanics talks about this, in great detail. Something I might cover way later near the end of this thread.
 
