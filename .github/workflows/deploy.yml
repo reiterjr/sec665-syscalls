@@ -28,6 +28,9 @@ jobs:
         uses: peaceiris/actions-mdbook@v2
         with:
           mdbook-version: "0.5.2"
+      
+      - name: Install mdbook-admonish
+        run: cargo install mdbook-admonish --locked --version 1.17.0
 
       - name: Build mdBook
         run: mdbook build
