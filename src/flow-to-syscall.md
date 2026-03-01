@@ -29,6 +29,9 @@ main(VOID)
 
 It's a simple program that allocates one page of memory. Now we can follow this in WinDbg... the best debugger on the planet.
 
+> [!TIP]
+> Launch your executable under WinDbg (e.g. `windbg -o your.exe`) so you break in before any code runs. Then set your breakpoint and go.
+
 I launched a new executable under WinDbg and set a BP on `kernelbase!VirtualAlloc` using the command: `bp kernelbase!VirtualAlloc`
 
 F5 the program and let the BP hit.
@@ -49,7 +52,8 @@ KERNELBASE!VirtualAlloc (00007ffc`b1bb18a0)
 
 Cool. Now we can jump into NTDLL and take a look from there.
 
-From here, set a `BP` on that routine or just hit `TC` to trace to the first call instruction found.
+> [!TIP]
+> From here, set a `BP` on that routine or just hit `TC` (Trace to next Call) to single-step until the first call instruction—you'll land at the ntdll stub.
 
 Here is what things will look like at the `BP`.
 
@@ -67,6 +71,9 @@ ntdll!NtAllocateVirtualMemory:
 ```
 
 You can continue to single step up to the `syscall` if you'd like. You won't be able to jump with the `syscall` into the kernel just yet, but we will dive into that later and take this all the way home!
+
+> [!NOTE]
+> Inspecting the call stack with `k` at this point shows the full path from your code → KERNELBASE → ntdll. That chain is exactly what we're walking in this chapter.
 
 One thing I like to check out around this time is the call stack. Run `k` to show the call stack up to this point.
 

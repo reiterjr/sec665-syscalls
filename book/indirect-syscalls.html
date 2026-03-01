@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-0f741218.js";
+            window.path_to_searchindex_js = "searchindex-f944add7.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-2657fbf4.js"></script>
@@ -180,7 +180,11 @@
                     <main>
                         <h1 id="indirect-syscalls"><a class="header" href="#indirect-syscalls">Indirect syscalls</a></h1>
 <h2 id="cons-of-direct-syscalls"><a class="header" href="#cons-of-direct-syscalls">Cons of direct syscalls</a></h2>
-<p>As a refresher, direct syscalls are being invoked from within our own EXE. Cool, we can maybe get past some EDRs but there is a downside to this. We can be caught because the return address is not going to be located where it should be; ntdll.dll. This check can happen when the kernel is done doing its thing. Inside the <strong><code>_KPROCESS.InstrumentationCallback</code></strong> field, is a pointer to the routine that will be invoked after the <code>SYSCALL</code> is done (<code>SYSRET</code>). The check can be quite simple and if you know how to parse a PE image, then I’m sure you can already think of the simple 3 or so lines of C++ code to get that done, like so:</p>
+<p>As a refresher, direct syscalls are being invoked from within our own EXE. Cool, we can maybe get past some EDRs but there is a downside to this. We can be caught because the return address is not going to be located where it should be; ntdll.dll. &gt; [!CAUTION]</p>
+<blockquote>
+<p>This check can happen when the kernel is done doing its thing. Inside <strong><code>_KPROCESS.InstrumentationCallback</code></strong> is a pointer to the routine invoked after <code>SYSRET</code>. If the return address is inside your EXE instead of ntdll, you can be flagged as using direct syscalls.</p>
+</blockquote>
+<p>This check can happen when the kernel is done doing its thing. Inside the <strong><code>_KPROCESS.InstrumentationCallback</code></strong> field, is a pointer to the routine that will be invoked after the <code>SYSCALL</code> is done (<code>SYSRET</code>). The check can be quite simple and if you know how to parse a PE image, then I’m sure you can already think of the simple 3 or so lines of C++ code to get that done, like so:</p>
 <pre><code class="language-cpp">const auto ImageBase = NtCurrentPeb()-&gt;ImageBaseAddress;
 const auto NtHeaders = RtlImageNtHeader(ImageBase);
 if ((retaddr &gt;= ImageBase) &amp;&amp; (retaddr &lt; ImageBase + NtHeaders-&gt;OptionalHeader.SizeOfImage))
@@ -191,8 +195,16 @@ if ((retaddr &gt;= ImageBase) &amp;&amp; (retaddr &lt; ImageBase + NtHeaders-&gt
 <h2 id="what-are-indirect-syscalls"><a class="header" href="#what-are-indirect-syscalls">What are indirect syscalls?</a></h2>
 <p>Instead of having the <code>SYSCALL</code> instruction coming from within our own EXE’s image, we need to have it come from within NTDLL. Like any normal <code>SYSCALL</code> would look like. To help with this, <strong>Bouncy Gate</strong> and <strong>Recycled Gate</strong> were made. There are too many gates.</p>
 <h2 id="implementation"><a class="header" href="#implementation">Implementation</a></h2>
+<blockquote class="blockquote-tag blockquote-tag-tip">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p>
+<p>With indirect syscalls you don’t execute the <code>SYSCALL</code> from your own code—you find the <code>SYSCALL</code> instruction inside ntdll and <strong>jump</strong> to it. The transition to kernel therefore appears to come from ntdll, which looks like normal execution.</p>
+</blockquote>
 <p>Here, instead of calling the <code>SYSCALL</code> ourselves, we <strong>jump</strong> to it. We find the address of the <code>SYSCALL</code> instruction inside of NTDLL and <code>JMP</code> there. <code>JMP</code>s and <code>CALL</code>s are indirect instructions. In addition to the gates mentioned above, <strong>SysWhispers3</strong> also uses indirect syscalls, just like <strong>Cobalt Strike’s BOFs</strong> do too.</p>
 <h2 id="cons-about-indirect-syscalls"><a class="header" href="#cons-about-indirect-syscalls">Cons about indirect syscalls</a></h2>
+<blockquote class="blockquote-tag blockquote-tag-warning">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p>
+<p>EDRs are increasingly checking not only the return address but also <strong>where</strong> the syscall was invoked from. If the call site is still your EXE (even if you JMP to ntdll for the actual instruction), you may need call-stack spoofing or a different execution context (e.g. a new thread with a faked stack) to blend in.</p>
+</blockquote>
 <p>One of the downsides is that EDRs are catching on here. In addition to checking the return address of them, they are now looking at where they came from, EXE or NTDLL. So now, we have to fake where they are coming from with a new thread and then spoofing the call stack.</p>
 
                     </main>

@@ -1,5 +1,8 @@
 # What is a direct syscall?
 
+> [!WARNING]
+> Wrapper routines in `kernel32.dll` and `kernelbase.dll` can be hooked by EDRs. Bypassing them with direct syscalls avoids those hooks but introduces other telltales (e.g. return address) that we'll cover when we talk about indirect syscalls.
+
 Over in [The flow to a syscall](./flow-to-syscall.md), you see what are viewed as wrappers that wrap around direct syscalls. Some of the wrapping could be seen as bloat or unwanted overhead in a program. Also, those wrapper routines can be subject to user mode hooks, but let's leave hooks out of this for now.
 
 An option that can be done is to avoid those wrapper functions that are typically found in `kernel32.dll` and `kernelbase.dll`, to name a few, and just go directly to the `syscall` itself in `ntdll.dll`. This action is how the technique named **direct syscalls** was born. Skip all of the higher level stuff and go directly to the lowest level possible.
@@ -19,6 +22,9 @@ When implant developers want to perform a direct syscall, many times a search is
 // the end of the stub
 0f 05 c3 cd 2e c3
 ```
+
+> [!NOTE]
+> On older Windows builds the byte pattern above can match a full stub. On recent builds, the stub includes extra instructions (the `test`/`jne` we cover in the next chapter), so pattern length and offsets may differ.
 
 At the root of it, that is not really a complete stub, but on some older versions of Windows and ntdll.dll, it is. On more recent versions of Windows, there are some missing instructions from what is shown above. Those missing instructions are the following:
 

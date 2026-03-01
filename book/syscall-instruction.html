@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-0f741218.js";
+            window.path_to_searchindex_js = "searchindex-f944add7.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-2657fbf4.js"></script>
@@ -197,7 +197,11 @@
 </blockquote>
 <p>OK, that isn’t entirely useful anymore. We have what we need to move on with this.</p>
 <h2 id="system-call-handler"><a class="header" href="#system-call-handler">System-call handler</a></h2>
-<p>From the notes above, we need to know what this routine is if we want to dive into this any deeper. To find out what the handler is for <strong>IA32_LSTAR MSR</strong>, we need to be in a kernel debugger session. We then need to use a <strong>CPL0</strong>-only instruction to read from the <strong>MSR</strong>: <strong><code>rdmsr</code></strong>. In a kernel driver, the equivalent would be a compiler intrinsic <strong><code>__readmsr</code></strong>.</p>
+<p>From the notes above, we need to know what this routine is if we want to dive into this any deeper. To find out what the handler is for <strong>IA32_LSTAR MSR</strong>, we need to be in a kernel debugger session.</p>
+<blockquote class="blockquote-tag blockquote-tag-note">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p>
+<p>Reading MSRs requires <strong>CPL0</strong> (kernel mode). In the debugger you use <strong><code>rdmsr</code></strong>; in a kernel driver you’d use the <strong><code>__readmsr</code></strong> compiler intrinsic.</p>
+</blockquote>
 <pre><code class="language-text">0: kd&gt; rdmsr C0000082H
 msr[c0000082] = fffff804`74a1a2c0
 </code></pre>

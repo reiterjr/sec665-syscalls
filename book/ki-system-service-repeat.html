@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-0f741218.js";
+            window.path_to_searchindex_js = "searchindex-f944add7.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-2657fbf4.js"></script>
@@ -204,7 +204,12 @@
 dx (((int*)&amp;(nt!KiServiceTable))[2] &amp; 0xf)
 (((int*)&amp;(nt!KiServiceTable))[2] &amp; 0xf) : 2  // 2 stack args
 </code></pre>
-<p>It’s quite a manual process doing that especially if there are hundreds of syscalls in that table. It would be much better to use the true power of WinDbg and its debugger data model like so:</p>
+<p>It’s quite a manual process doing that especially if there are hundreds of syscalls in that table.</p>
+<blockquote class="blockquote-tag blockquote-tag-tip">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p>
+<p>WinDbg’s <strong>dx</strong> (debugger data model) can iterate the service table, apply the RVA shift, and resolve symbols in one expression. The examples below dump the table and then resolve to function names—handy when you’re exploring the full SSDT.</p>
+</blockquote>
+<p>It would be much better to use the true power of WinDbg and its debugger data model like so:</p>
 <pre><code class="language-text">// make a pseudo variable
 dx @$table = &amp;nt!KiServiceTable
 @$table = &amp;nt!KiServiceTable : 0xfffff8012dee4eb0 [Type: void *]
@@ -229,7 +234,10 @@ dx (((int(*)[90000])&amp;(nt!KiServiceTable)))-&gt;Take(*(int*)&amp;nt!KiService
     [5]              : nt!NtCallbackReturn (fffff801`2e218710)
     [6]              : nt!NtReadFile (fffff801`2e419f60)
 </code></pre>
-<p>Reminder: this is only the table for service syscalls that come from <code>ntdll.dll</code> and <strong>NOT</strong> from <code>win32u.dll</code> into <code>win32k.sys</code>.</p>
+<blockquote class="blockquote-tag blockquote-tag-note">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p>
+<p>This is only the table for service syscalls that come from <strong>ntdll.dll</strong> (native). GUI-related syscalls from <strong>win32u.dll</strong> use a different table (e.g. table ID <code>0x20</code>) and dispatch into <strong>win32k.sys</strong>. You can explore that path the same way in the debugger.</p>
+</blockquote>
 <p>I leave that as an exercise to you all!</p>
 <h2 id="checking-the-syscall-index"><a class="header" href="#checking-the-syscall-index">Checking the syscall index</a></h2>
 <p>One of the next actions <code>KiSystemServiceRepeat</code> does is check to see if the syscall index is beyond this table. Remember, every table has a <code>ServiceLimit</code> that indicates how many syscalls there are. Let’s see how it computes this in code.</p>
