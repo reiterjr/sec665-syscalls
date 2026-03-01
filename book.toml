@@ -3,3 +3,19 @@ authors = ["Jonathan Reiter"]
 language = "en"
 src = "src"
 title = "syscalls"
+description = "Course workbook and reference for SEC665"
+language = "en"
+text-direction = "ltr"
+
+# Optional but recommended
+[output.html]
+# theme = "my-theme"          # if you add a custom theme later
+site-url = "/"                 # important for GitHub Pages
+git-repository-url = "https://github.com/reiterjr/sec665-books"
+
+[output.html.print]
+enable = true
+
+[preprocessor.admonish]        # nice colored callouts (optional but awesome)
+command = "mdbook-admonish"
+assets_version = "3"           # change if you update the plugin
