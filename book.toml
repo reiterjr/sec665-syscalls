@@ -6,9 +6,9 @@ title = "syscalls"
 description = "Extended content for SEC665"
 text-direction = "ltr"
 
-[preprocessor.admonish]
-command = "mdbook-admonish"
-assets_version = "3.1.0" # do not edit: managed by `mdbook-admonish install`
+#[preprocessor.admonish]
+#command = "mdbook-admonish"
+#assets_version = "3.1.0" # do not edit: managed by `mdbook-admonish install`
 
 # Optional but recommended
 [output.html]
