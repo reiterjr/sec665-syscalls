@@ -35,7 +35,12 @@ dx (((int*)&(nt!KiServiceTable))[2] & 0xf)
 (((int*)&(nt!KiServiceTable))[2] & 0xf) : 2  // 2 stack args
 ```
 
-It's quite a manual process doing that especially if there are hundreds of syscalls in that table. It would be much better to use the true power of WinDbg and its debugger data model like so:
+It's quite a manual process doing that especially if there are hundreds of syscalls in that table.
+
+> [!TIP]
+> WinDbg's **dx** (debugger data model) can iterate the service table, apply the RVA shift, and resolve symbols in one expression. The examples below dump the table and then resolve to function names—handy when you're exploring the full SSDT.
+
+It would be much better to use the true power of WinDbg and its debugger data model like so:
 
 ```text
 // make a pseudo variable
@@ -67,7 +72,8 @@ dx (((int(*)[90000])&(nt!KiServiceTable)))->Take(*(int*)&nt!KiServiceLimit)->Sel
     [6]              : nt!NtReadFile (fffff801`2e419f60)
 ```
 
-Reminder: this is only the table for service syscalls that come from `ntdll.dll` and **NOT** from `win32u.dll` into `win32k.sys`.
+> [!NOTE]
+> This is only the table for service syscalls that come from **ntdll.dll** (native). GUI-related syscalls from **win32u.dll** use a different table (e.g. table ID `0x20`) and dispatch into **win32k.sys**. You can explore that path the same way in the debugger.
 
 I leave that as an exercise to you all!
 

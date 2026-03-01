@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-0f741218.js";
+            window.path_to_searchindex_js = "searchindex-f944add7.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-2657fbf4.js"></script>
@@ -193,10 +193,17 @@
 [...SNIP...]
    +0x308 SystemCall      0 : Uint4B
 </code></pre>
+<blockquote class="blockquote-tag blockquote-tag-note">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p>
+<p><code>_KUSER_SHARED_DATA</code> is read-only for user mode and is mapped at the same address in every process. Exploit and implant code often reads it to detect VBS or to find kernel-related hints.</p>
+</blockquote>
 <p>It’s a massive structure that is often abused by exploit devs and implant devs. One of the interesting fields is at offset <code>308h</code>, <strong>SystemCall</strong>.</p>
 <h2 id="_kuser_shared_datasystemcall"><a class="header" href="#_kuser_shared_datasystemcall"><code>_KUSER_SHARED_DATA.SystemCall</code></a></h2>
 <p>Back in the day, this field used to hold the address that was going to be executed in the kernel. This became abused and now the meaning has changed for it. Currently, the value will be either clear (0) or set (1), and is a way to detect if <strong>Virtual Based Security</strong> is enabled for a system. If it is, then the <code>TEST</code> instruction will result in <strong>TRUE</strong>, the <strong>EFLAGS</strong> will be updated accordingly, and the <code>JMP</code> will be taken. The <code>JMP</code> will then land on the <code>INT 2Eh</code> instruction. This also means that there are <strong>Virtual Trust Levels</strong> and the syscalls will now happen in <strong>VTL0</strong>.</p>
-<p>The true enthusiasts out there might be curious to know the speeds behind these instructions. The <code>SYSCALL</code> instruction is measurably faster than <code>INT 2Eh</code> by ~1.00 clock ticks.</p>
+<blockquote class="blockquote-tag blockquote-tag-tip">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p>
+<p>The <code>SYSCALL</code> instruction is measurably faster than <code>INT 2Eh</code> by about one clock tick. When VBS is off and both paths are valid, the kernel uses <code>SYSCALL</code>; when VBS is on, the stub uses <code>INT 2Eh</code> and VTL0.</p>
+</blockquote>
 
                     </main>
 

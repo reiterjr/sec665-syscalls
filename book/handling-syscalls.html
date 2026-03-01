@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-0f741218.js";
+            window.path_to_searchindex_js = "searchindex-f944add7.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-2657fbf4.js"></script>
@@ -182,6 +182,10 @@
 <h2 id="discovering-the-syscall-handler"><a class="header" href="#discovering-the-syscall-handler">Discovering the syscall handler</a></h2>
 <p>From the previous chapter, <a href="./syscall-instruction.html">The SYSCALL instruction</a>, we saw how to obtain the handler that services all syscalls coming from userland. Since we still have a kernel debugging session up and running, we can disassemble the function and also set a breakpoint on it.</p>
 <h2 id="breakpoints"><a class="header" href="#breakpoints">Breakpoints</a></h2>
+<blockquote class="blockquote-tag blockquote-tag-caution">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Caution</p>
+<p><strong>Do not set a breakpoint on <code>nt!KiSystemCall64</code> itself.</strong> The first instruction is <code>SWAPGS</code>, and <code>RSP</code> still points at userland until the next two instructions run. Hitting a BP there can crash or BSOD the VM. Use <strong><code>bp nt!KiSystemCall64+15h</code></strong> so you break after the kernel stack is set up (e.g. after the <code>push 2Bh</code>).</p>
+</blockquote>
 <p>The first instinct might have you set a BP right at the function itself like so: <strong><code>bp nt!KiSystemCall64</code></strong>. Not a bad idea at first and I did this as well. After BSODing my VM a few times after setting that BP, I realized that this isn’t your normal function with a proper function prolog. Typically, a proper function prolog will set up the stack frame, make sure <code>RSP</code> is taken care of before execution of that function proceeds.</p>
 <p>The first instruction here is a <strong><code>SWAPGS</code></strong> which is insanely critical for syscall handling and is also the reason the VM becomes unstable and ultimately BSODs when setting a BP on that instruction. After a bit more experimentation, I found that setting a BP at <strong><code>nt!KiSystemCall64+15h</code></strong> was more stable and reliable.</p>
 <p>Let’s look at the first several instructions for the syscall handler on this VM.</p>
@@ -192,7 +196,12 @@
 6a2b                           push    2Bh  // BP here, all is good!
 </code></pre>
 <h2 id="setting-up-rsp"><a class="header" href="#setting-up-rsp">Setting up <code>RSP</code></a></h2>
-<p>If you look at the disassembly, you will see that <code>RSP</code> isn’t properly set up until the second <code>MOV</code> instruction: <strong><code>MOV RSP, QWORD PTR GS:[1A8h]</code></strong>. This is why setting a BP any time before, or even on that instruction, creates instability. At the first <code>MOV</code> instruction, <code>RSP</code> will still be pointing to a userland address. This is not good now that we are in the kernel with CPL0. The offsets you see for the GS segment register won’t really make sense yet. For that, I will dedicate a chapter for the <strong>SWAPGS</strong> instruction next.</p>
+<p>If you look at the disassembly, you will see that <code>RSP</code> isn’t properly set up until the second <code>MOV</code> instruction: <strong><code>MOV RSP, QWORD PTR GS:[1A8h]</code></strong>. This is why setting a BP any time before, or even on that instruction, creates instability. At the first <code>MOV</code> instruction, <code>RSP</code> will still be pointing to a userland address.</p>
+<blockquote class="blockquote-tag blockquote-tag-note">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p>
+<p>Using that userland <code>RSP</code> in the kernel (CPL0) is unsafe—writes could corrupt user data or cause a bugcheck. The handler deliberately switches to the kernel stack with the second <code>MOV</code> before doing anything else. The GS segment offsets (<code>10h</code>, <code>1A8h</code>) are part of the kernel’s per-CPU data; we’ll cover <strong>SWAPGS</strong> and that layout in a later chapter.</p>
+</blockquote>
+<p>This is not good now that we are in the kernel with CPL0. The offsets you see for the GS segment register won’t really make sense yet. For that, I will dedicate a chapter for the <strong>SWAPGS</strong> instruction next.</p>
 
                     </main>
 

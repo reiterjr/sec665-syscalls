@@ -22,7 +22,10 @@ OK, that isn't entirely useful anymore. We have what we need to move on with thi
 
 ## System-call handler
 
-From the notes above, we need to know what this routine is if we want to dive into this any deeper. To find out what the handler is for **IA32_LSTAR MSR**, we need to be in a kernel debugger session. We then need to use a **CPL0**-only instruction to read from the **MSR**: **`rdmsr`**. In a kernel driver, the equivalent would be a compiler intrinsic **`__readmsr`**.
+From the notes above, we need to know what this routine is if we want to dive into this any deeper. To find out what the handler is for **IA32_LSTAR MSR**, we need to be in a kernel debugger session.
+
+> [!NOTE]
+> Reading MSRs requires **CPL0** (kernel mode). In the debugger you use **`rdmsr`**; in a kernel driver you'd use the **`__readmsr`** compiler intrinsic.
 
 ```text
 0: kd> rdmsr C0000082H

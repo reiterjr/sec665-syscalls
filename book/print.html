@@ -37,7 +37,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-0f741218.js";
+            window.path_to_searchindex_js = "searchindex-f944add7.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-2657fbf4.js"></script>
@@ -180,22 +180,6 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="getting-started-with-syscalls"><a class="header" href="#getting-started-with-syscalls">Getting started with syscalls</a></h1>
-<blockquote class="blockquote-tag blockquote-tag-note">
-<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p>
-<p>This is a nice blue note box.</p>
-</blockquote>
-<blockquote class="blockquote-tag blockquote-tag-tip">
-<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p>
-<p>Helpful tip.</p>
-</blockquote>
-<blockquote class="blockquote-tag blockquote-tag-warning">
-<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p>
-<p>Pay attention here.</p>
-</blockquote>
-<blockquote class="blockquote-tag blockquote-tag-caution">
-<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Caution</p>
-<p>Danger zone.</p>
-</blockquote>
 <h2 id="what-is-a-system-call"><a class="header" href="#what-is-a-system-call">What is a system call?</a></h2>
 <p>If you look online for MSDN documentation around the word syscall or system call, you might come up empty handed. You might even hit this <a href="https://learn.microsoft.com/en-us/cpp/c-runtime-library/system-calls?view=msvc-170">page</a> thinking you found something of interest. Nope. Not even close. Perhaps some of the best, formal documentation is found in the Windows Internals books when describing system service calls, trapping, and overall system service handling. Windows Internals Chapter 8: System mechanics talks about this, in great detail. Something I might cover way later near the end of this thread.</p>
 <p>In general, a system call is an interrupt that will interrupt the system (kernel) and invoke a service routine according to an index value. This value is what is commonly referred to as the system service call number, or system service number, or syscall ID. The kernel will handle the dispatching of the routine.</p>
@@ -269,6 +253,10 @@ main(VOID)
 }
 </code></pre>
 <p>It’s a simple program that allocates one page of memory. Now we can follow this in WinDbg… the best debugger on the planet.</p>
+<blockquote class="blockquote-tag blockquote-tag-tip">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p>
+<p>Launch your executable under WinDbg (e.g. <code>windbg -o your.exe</code>) so you break in before any code runs. Then set your breakpoint and go.</p>
+</blockquote>
 <p>I launched a new executable under WinDbg and set a BP on <code>kernelbase!VirtualAlloc</code> using the command: <code>bp kernelbase!VirtualAlloc</code></p>
 <p>F5 the program and let the BP hit.</p>
 <p>The BP will get hit and at that time you can see what calls it makes. We are looking for some <code>Nt</code> prefixed function in the output.</p>
@@ -283,7 +271,10 @@ KERNELBASE!VirtualAlloc (00007ffc`b1bb18a0)
     call to ntdll!RtlSetLastWin32Error (00007ffc`b3fe0770)
 </code></pre>
 <p>Cool. Now we can jump into NTDLL and take a look from there.</p>
-<p>From here, set a <code>BP</code> on that routine or just hit <code>TC</code> to trace to the first call instruction found.</p>
+<blockquote class="blockquote-tag blockquote-tag-tip">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p>
+<p>From here, set a <code>BP</code> on that routine or just hit <code>TC</code> (Trace to next Call) to single-step until the first call instruction—you’ll land at the ntdll stub.</p>
+</blockquote>
 <p>Here is what things will look like at the <code>BP</code>.</p>
 <pre><code class="language-text">ntdll!NtAllocateVirtualMemory:
 00007ffc`b402d060 4c8bd1           mov     r10, rcx. // &lt;--- first param
@@ -297,6 +288,10 @@ KERNELBASE!VirtualAlloc (00007ffc`b1bb18a0)
 00007ffc`b402d078 0f1f840000000000 nop     dword ptr [rax+rax]
 </code></pre>
 <p>You can continue to single step up to the <code>syscall</code> if you’d like. You won’t be able to jump with the <code>syscall</code> into the kernel just yet, but we will dive into that later and take this all the way home!</p>
+<blockquote class="blockquote-tag blockquote-tag-note">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p>
+<p>Inspecting the call stack with <code>k</code> at this point shows the full path from your code → KERNELBASE → ntdll. That chain is exactly what we’re walking in this chapter.</p>
+</blockquote>
 <p>One thing I like to check out around this time is the call stack. Run <code>k</code> to show the call stack up to this point.</p>
 <pre><code class="language-text">0:000&gt; k
  # Child-SP          RetAddr               Call Site
@@ -311,6 +306,10 @@ KERNELBASE!VirtualAlloc (00007ffc`b1bb18a0)
 <p>Cool. Now we can start to dive a bit deeper into things over the next several chapters.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="what-is-a-direct-syscall"><a class="header" href="#what-is-a-direct-syscall">What is a direct syscall?</a></h1>
+<blockquote class="blockquote-tag blockquote-tag-warning">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p>
+<p>Wrapper routines in <code>kernel32.dll</code> and <code>kernelbase.dll</code> can be hooked by EDRs. Bypassing them with direct syscalls avoids those hooks but introduces other telltales (e.g. return address) that we’ll cover when we talk about indirect syscalls.</p>
+</blockquote>
 <p>Over in <a href="#the-flow-to-a-syscall">The flow to a syscall</a>, you see what are viewed as wrappers that wrap around direct syscalls. Some of the wrapping could be seen as bloat or unwanted overhead in a program. Also, those wrapper routines can be subject to user mode hooks, but let’s leave hooks out of this for now.</p>
 <p>An option that can be done is to avoid those wrapper functions that are typically found in <code>kernel32.dll</code> and <code>kernelbase.dll</code>, to name a few, and just go directly to the <code>syscall</code> itself in <code>ntdll.dll</code>. This action is how the technique named <strong>direct syscalls</strong> was born. Skip all of the higher level stuff and go directly to the lowest level possible.</p>
 <h2 id="syscall-stub"><a class="header" href="#syscall-stub">Syscall stub</a></h2>
@@ -323,6 +322,10 @@ KERNELBASE!VirtualAlloc (00007ffc`b1bb18a0)
 // the end of the stub
 0f 05 c3 cd 2e c3
 </code></pre>
+<blockquote class="blockquote-tag blockquote-tag-note">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p>
+<p>On older Windows builds the byte pattern above can match a full stub. On recent builds, the stub includes extra instructions (the <code>test</code>/<code>jne</code> we cover in the next chapter), so pattern length and offsets may differ.</p>
+</blockquote>
 <p>At the root of it, that is not really a complete stub, but on some older versions of Windows and ntdll.dll, it is. On more recent versions of Windows, there are some missing instructions from what is shown above. Those missing instructions are the following:</p>
 <pre><code class="language-asm">test    byte ptr [7FFE0308h], 1
 jne     ntdll!&lt;Some Nt Function&gt;+0x15
@@ -344,13 +347,24 @@ jne     ntdll!&lt;Some Nt Function&gt;+0x15
 [...SNIP...]
    +0x308 SystemCall      0 : Uint4B
 </code></pre>
+<blockquote class="blockquote-tag blockquote-tag-note">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p>
+<p><code>_KUSER_SHARED_DATA</code> is read-only for user mode and is mapped at the same address in every process. Exploit and implant code often reads it to detect VBS or to find kernel-related hints.</p>
+</blockquote>
 <p>It’s a massive structure that is often abused by exploit devs and implant devs. One of the interesting fields is at offset <code>308h</code>, <strong>SystemCall</strong>.</p>
 <h2 id="_kuser_shared_datasystemcall"><a class="header" href="#_kuser_shared_datasystemcall"><code>_KUSER_SHARED_DATA.SystemCall</code></a></h2>
 <p>Back in the day, this field used to hold the address that was going to be executed in the kernel. This became abused and now the meaning has changed for it. Currently, the value will be either clear (0) or set (1), and is a way to detect if <strong>Virtual Based Security</strong> is enabled for a system. If it is, then the <code>TEST</code> instruction will result in <strong>TRUE</strong>, the <strong>EFLAGS</strong> will be updated accordingly, and the <code>JMP</code> will be taken. The <code>JMP</code> will then land on the <code>INT 2Eh</code> instruction. This also means that there are <strong>Virtual Trust Levels</strong> and the syscalls will now happen in <strong>VTL0</strong>.</p>
-<p>The true enthusiasts out there might be curious to know the speeds behind these instructions. The <code>SYSCALL</code> instruction is measurably faster than <code>INT 2Eh</code> by ~1.00 clock ticks.</p>
+<blockquote class="blockquote-tag blockquote-tag-tip">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p>
+<p>The <code>SYSCALL</code> instruction is measurably faster than <code>INT 2Eh</code> by about one clock tick. When VBS is off and both paths are valid, the kernel uses <code>SYSCALL</code>; when VBS is on, the stub uses <code>INT 2Eh</code> and VTL0.</p>
+</blockquote>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="interrupts"><a class="header" href="#interrupts">Interrupts</a></h1>
 <h2 id="what-is-int-2eh"><a class="header" href="#what-is-int-2eh">What is INT 2Eh?</a></h2>
+<blockquote class="blockquote-tag blockquote-tag-note">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p>
+<p>The IDT is per-processor and lives in kernel space. You need a kernel debugger (e.g. <code>!idt</code> in WinDbg) to inspect it; user-mode debuggers cannot read it.</p>
+</blockquote>
 <p>The <strong>INT</strong> instruction invokes something called an <strong>interrupt</strong> that kind of “halts” the system to “wake up” the kernel’s interrupt handler routine. The value given to the instruction is an index into a table called the <strong>Interrupt Descriptor Table</strong>, or <strong>IDT</strong>. Every system is going to have one of these tables and you can see them with a kernel debugging session. Here is a dump of the IDT on a Windows 10 Dev-VM built for SEC670.</p>
 <pre><code class="language-text">0: kd&gt; !idt
 Dumping IDT: fffff804774f2000
@@ -362,14 +376,23 @@ Dumping IDT: fffff804774f2000
 [..SNIP..]
 2f:    fffff80474a0efe0 nt!KiDpcInterrupt
 </code></pre>
-<p>There are some interesting ones there in this snippet like dividing by 0, a breakpoint getting hit, APC interrupts, DPC interrupts. Whenever one of those events happen, like a divide by 0, an interrupt will be triggered and INT 00h will be the underlying entry for that. You can also see the address of the routine that will handle an interrupt. Back in the day, people loved to hook entries in the IDT, but that’s not really a thing anymore.</p>
+<p>There are some interesting ones there in this snippet like dividing by 0, a breakpoint getting hit, APC interrupts, DPC interrupts. Whenever one of those events happen, like a divide by 0, an interrupt will be triggered and INT 00h will be the underlying entry for that. You can also see the address of the routine that will handle an interrupt.</p>
+<blockquote class="blockquote-tag blockquote-tag-caution">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Caution</p>
+<p>Hooking IDT entries was a common technique in the past. Modern systems (e.g. with HVCI/VBS) make this much harder and less reliable; consider it historical context, not a recommended approach.</p>
+</blockquote>
+<p>Back in the day, people loved to hook entries in the IDT, but that’s not really a thing anymore.</p>
 <p>What’s missing from the above snippet is the entry <strong>2Eh</strong>. This one is missing because even though Hyper-V is enabled, VBS is not. Thus, there will be no corresponding entry for it built into the table. It will never get hit and there’s no need to have a handler routine for it. Simple as that.</p>
 <h2 id="building-the-idt"><a class="header" href="#building-the-idt">Building the IDT</a></h2>
 <p>The IDT is built when the kernel is being initialized in the routine <strong><code>nt!KiInitializeKernel</code></strong>. Also in that massive routine, the <code>_KUSER_SHARED_DATA</code> structure is filled out by the <strong><code>nt!KiInitializeBootStructures</code></strong> routine.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="indirect-syscalls"><a class="header" href="#indirect-syscalls">Indirect syscalls</a></h1>
 <h2 id="cons-of-direct-syscalls"><a class="header" href="#cons-of-direct-syscalls">Cons of direct syscalls</a></h2>
-<p>As a refresher, direct syscalls are being invoked from within our own EXE. Cool, we can maybe get past some EDRs but there is a downside to this. We can be caught because the return address is not going to be located where it should be; ntdll.dll. This check can happen when the kernel is done doing its thing. Inside the <strong><code>_KPROCESS.InstrumentationCallback</code></strong> field, is a pointer to the routine that will be invoked after the <code>SYSCALL</code> is done (<code>SYSRET</code>). The check can be quite simple and if you know how to parse a PE image, then I’m sure you can already think of the simple 3 or so lines of C++ code to get that done, like so:</p>
+<p>As a refresher, direct syscalls are being invoked from within our own EXE. Cool, we can maybe get past some EDRs but there is a downside to this. We can be caught because the return address is not going to be located where it should be; ntdll.dll. &gt; [!CAUTION]</p>
+<blockquote>
+<p>This check can happen when the kernel is done doing its thing. Inside <strong><code>_KPROCESS.InstrumentationCallback</code></strong> is a pointer to the routine invoked after <code>SYSRET</code>. If the return address is inside your EXE instead of ntdll, you can be flagged as using direct syscalls.</p>
+</blockquote>
+<p>This check can happen when the kernel is done doing its thing. Inside the <strong><code>_KPROCESS.InstrumentationCallback</code></strong> field, is a pointer to the routine that will be invoked after the <code>SYSCALL</code> is done (<code>SYSRET</code>). The check can be quite simple and if you know how to parse a PE image, then I’m sure you can already think of the simple 3 or so lines of C++ code to get that done, like so:</p>
 <pre><code class="language-cpp">const auto ImageBase = NtCurrentPeb()-&gt;ImageBaseAddress;
 const auto NtHeaders = RtlImageNtHeader(ImageBase);
 if ((retaddr &gt;= ImageBase) &amp;&amp; (retaddr &lt; ImageBase + NtHeaders-&gt;OptionalHeader.SizeOfImage))
@@ -380,8 +403,16 @@ if ((retaddr &gt;= ImageBase) &amp;&amp; (retaddr &lt; ImageBase + NtHeaders-&gt
 <h2 id="what-are-indirect-syscalls"><a class="header" href="#what-are-indirect-syscalls">What are indirect syscalls?</a></h2>
 <p>Instead of having the <code>SYSCALL</code> instruction coming from within our own EXE’s image, we need to have it come from within NTDLL. Like any normal <code>SYSCALL</code> would look like. To help with this, <strong>Bouncy Gate</strong> and <strong>Recycled Gate</strong> were made. There are too many gates.</p>
 <h2 id="implementation"><a class="header" href="#implementation">Implementation</a></h2>
+<blockquote class="blockquote-tag blockquote-tag-tip">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p>
+<p>With indirect syscalls you don’t execute the <code>SYSCALL</code> from your own code—you find the <code>SYSCALL</code> instruction inside ntdll and <strong>jump</strong> to it. The transition to kernel therefore appears to come from ntdll, which looks like normal execution.</p>
+</blockquote>
 <p>Here, instead of calling the <code>SYSCALL</code> ourselves, we <strong>jump</strong> to it. We find the address of the <code>SYSCALL</code> instruction inside of NTDLL and <code>JMP</code> there. <code>JMP</code>s and <code>CALL</code>s are indirect instructions. In addition to the gates mentioned above, <strong>SysWhispers3</strong> also uses indirect syscalls, just like <strong>Cobalt Strike’s BOFs</strong> do too.</p>
 <h2 id="cons-about-indirect-syscalls"><a class="header" href="#cons-about-indirect-syscalls">Cons about indirect syscalls</a></h2>
+<blockquote class="blockquote-tag blockquote-tag-warning">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p>
+<p>EDRs are increasingly checking not only the return address but also <strong>where</strong> the syscall was invoked from. If the call site is still your EXE (even if you JMP to ntdll for the actual instruction), you may need call-stack spoofing or a different execution context (e.g. a new thread with a faked stack) to blend in.</p>
+</blockquote>
 <p>One of the downsides is that EDRs are catching on here. In addition to checking the return address of them, they are now looking at where they came from, EXE or NTDLL. So now, we have to fake where they are coming from with a new thread and then spoofing the call stack.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="the-syscall-instruction"><a class="header" href="#the-syscall-instruction">The <code>SYSCALL</code> instruction</a></h1>
@@ -403,7 +434,11 @@ if ((retaddr &gt;= ImageBase) &amp;&amp; (retaddr &lt; ImageBase + NtHeaders-&gt
 </blockquote>
 <p>OK, that isn’t entirely useful anymore. We have what we need to move on with this.</p>
 <h2 id="system-call-handler"><a class="header" href="#system-call-handler">System-call handler</a></h2>
-<p>From the notes above, we need to know what this routine is if we want to dive into this any deeper. To find out what the handler is for <strong>IA32_LSTAR MSR</strong>, we need to be in a kernel debugger session. We then need to use a <strong>CPL0</strong>-only instruction to read from the <strong>MSR</strong>: <strong><code>rdmsr</code></strong>. In a kernel driver, the equivalent would be a compiler intrinsic <strong><code>__readmsr</code></strong>.</p>
+<p>From the notes above, we need to know what this routine is if we want to dive into this any deeper. To find out what the handler is for <strong>IA32_LSTAR MSR</strong>, we need to be in a kernel debugger session.</p>
+<blockquote class="blockquote-tag blockquote-tag-note">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p>
+<p>Reading MSRs requires <strong>CPL0</strong> (kernel mode). In the debugger you use <strong><code>rdmsr</code></strong>; in a kernel driver you’d use the <strong><code>__readmsr</code></strong> compiler intrinsic.</p>
+</blockquote>
 <pre><code class="language-text">0: kd&gt; rdmsr C0000082H
 msr[c0000082] = fffff804`74a1a2c0
 </code></pre>
@@ -421,6 +456,10 @@ Exact matches:
 <h2 id="discovering-the-syscall-handler"><a class="header" href="#discovering-the-syscall-handler">Discovering the syscall handler</a></h2>
 <p>From the previous chapter, <a href="#the-syscall-instruction">The SYSCALL instruction</a>, we saw how to obtain the handler that services all syscalls coming from userland. Since we still have a kernel debugging session up and running, we can disassemble the function and also set a breakpoint on it.</p>
 <h2 id="breakpoints"><a class="header" href="#breakpoints">Breakpoints</a></h2>
+<blockquote class="blockquote-tag blockquote-tag-caution">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Caution</p>
+<p><strong>Do not set a breakpoint on <code>nt!KiSystemCall64</code> itself.</strong> The first instruction is <code>SWAPGS</code>, and <code>RSP</code> still points at userland until the next two instructions run. Hitting a BP there can crash or BSOD the VM. Use <strong><code>bp nt!KiSystemCall64+15h</code></strong> so you break after the kernel stack is set up (e.g. after the <code>push 2Bh</code>).</p>
+</blockquote>
 <p>The first instinct might have you set a BP right at the function itself like so: <strong><code>bp nt!KiSystemCall64</code></strong>. Not a bad idea at first and I did this as well. After BSODing my VM a few times after setting that BP, I realized that this isn’t your normal function with a proper function prolog. Typically, a proper function prolog will set up the stack frame, make sure <code>RSP</code> is taken care of before execution of that function proceeds.</p>
 <p>The first instruction here is a <strong><code>SWAPGS</code></strong> which is insanely critical for syscall handling and is also the reason the VM becomes unstable and ultimately BSODs when setting a BP on that instruction. After a bit more experimentation, I found that setting a BP at <strong><code>nt!KiSystemCall64+15h</code></strong> was more stable and reliable.</p>
 <p>Let’s look at the first several instructions for the syscall handler on this VM.</p>
@@ -431,7 +470,12 @@ Exact matches:
 6a2b                           push    2Bh  // BP here, all is good!
 </code></pre>
 <h2 id="setting-up-rsp"><a class="header" href="#setting-up-rsp">Setting up <code>RSP</code></a></h2>
-<p>If you look at the disassembly, you will see that <code>RSP</code> isn’t properly set up until the second <code>MOV</code> instruction: <strong><code>MOV RSP, QWORD PTR GS:[1A8h]</code></strong>. This is why setting a BP any time before, or even on that instruction, creates instability. At the first <code>MOV</code> instruction, <code>RSP</code> will still be pointing to a userland address. This is not good now that we are in the kernel with CPL0. The offsets you see for the GS segment register won’t really make sense yet. For that, I will dedicate a chapter for the <strong>SWAPGS</strong> instruction next.</p>
+<p>If you look at the disassembly, you will see that <code>RSP</code> isn’t properly set up until the second <code>MOV</code> instruction: <strong><code>MOV RSP, QWORD PTR GS:[1A8h]</code></strong>. This is why setting a BP any time before, or even on that instruction, creates instability. At the first <code>MOV</code> instruction, <code>RSP</code> will still be pointing to a userland address.</p>
+<blockquote class="blockquote-tag blockquote-tag-note">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p>
+<p>Using that userland <code>RSP</code> in the kernel (CPL0) is unsafe—writes could corrupt user data or cause a bugcheck. The handler deliberately switches to the kernel stack with the second <code>MOV</code> before doing anything else. The GS segment offsets (<code>10h</code>, <code>1A8h</code>) are part of the kernel’s per-CPU data; we’ll cover <strong>SWAPGS</strong> and that layout in a later chapter.</p>
+</blockquote>
+<p>This is not good now that we are in the kernel with CPL0. The offsets you see for the GS segment register won’t really make sense yet. For that, I will dedicate a chapter for the <strong>SWAPGS</strong> instruction next.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="kisystemservicerepeat"><a class="header" href="#kisystemservicerepeat">KiSystemServiceRepeat</a></h1>
 <h2 id="the-purpose"><a class="header" href="#the-purpose">The purpose</a></h2>
@@ -459,7 +503,12 @@ Exact matches:
 dx (((int*)&amp;(nt!KiServiceTable))[2] &amp; 0xf)
 (((int*)&amp;(nt!KiServiceTable))[2] &amp; 0xf) : 2  // 2 stack args
 </code></pre>
-<p>It’s quite a manual process doing that especially if there are hundreds of syscalls in that table. It would be much better to use the true power of WinDbg and its debugger data model like so:</p>
+<p>It’s quite a manual process doing that especially if there are hundreds of syscalls in that table.</p>
+<blockquote class="blockquote-tag blockquote-tag-tip">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p>
+<p>WinDbg’s <strong>dx</strong> (debugger data model) can iterate the service table, apply the RVA shift, and resolve symbols in one expression. The examples below dump the table and then resolve to function names—handy when you’re exploring the full SSDT.</p>
+</blockquote>
+<p>It would be much better to use the true power of WinDbg and its debugger data model like so:</p>
 <pre><code class="language-text">// make a pseudo variable
 dx @$table = &amp;nt!KiServiceTable
 @$table = &amp;nt!KiServiceTable : 0xfffff8012dee4eb0 [Type: void *]
@@ -484,7 +533,10 @@ dx (((int(*)[90000])&amp;(nt!KiServiceTable)))-&gt;Take(*(int*)&amp;nt!KiService
     [5]              : nt!NtCallbackReturn (fffff801`2e218710)
     [6]              : nt!NtReadFile (fffff801`2e419f60)
 </code></pre>
-<p>Reminder: this is only the table for service syscalls that come from <code>ntdll.dll</code> and <strong>NOT</strong> from <code>win32u.dll</code> into <code>win32k.sys</code>.</p>
+<blockquote class="blockquote-tag blockquote-tag-note">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p>
+<p>This is only the table for service syscalls that come from <strong>ntdll.dll</strong> (native). GUI-related syscalls from <strong>win32u.dll</strong> use a different table (e.g. table ID <code>0x20</code>) and dispatch into <strong>win32k.sys</strong>. You can explore that path the same way in the debugger.</p>
+</blockquote>
 <p>I leave that as an exercise to you all!</p>
 <h2 id="checking-the-syscall-index"><a class="header" href="#checking-the-syscall-index">Checking the syscall index</a></h2>
 <p>One of the next actions <code>KiSystemServiceRepeat</code> does is check to see if the syscall index is beyond this table. Remember, every table has a <code>ServiceLimit</code> that indicates how many syscalls there are. Let’s see how it computes this in code.</p>
@@ -547,6 +599,10 @@ call rax
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="the-end"><a class="header" href="#the-end">The end</a></h1>
 <h2 id="thanks-for-sticking-with-me"><a class="header" href="#thanks-for-sticking-with-me">Thanks for sticking with me</a></h2>
+<blockquote class="blockquote-tag blockquote-tag-tip">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p>
+<p>The best way to internalize this is to follow along in your own kernel debugger (local or remote VM). Set breakpoints, single-step through the handler, and inspect the service tables—you’ll have the full picture from user mode to kernel and back.</p>
+</blockquote>
 <p>Thanks a ton for sticking with me through this journey of an incredible deep dive into syscalls. If you follow along in a kernel debugger, you will have truly mastered the entire flow from user mode to kernel mode.</p>
 <p>I hope you learned something along the way!</p>
 
